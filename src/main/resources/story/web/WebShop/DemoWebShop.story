@@ -1,13 +1,20 @@
 Scenario: Verify that allows register a User
 Given I am on main application page
 When I click on element located by `By.xpath(//*[@class='header']//a[contains(text(), 'Register')])`
-Given I am on page with URL `https://demowebshop.tricentis.com/register`
+Then the page has the relative URL 'https://demowebshop.tricentis.com/register'
 
 
 Scenario: Verify that allows login as a User
 Given I am on main application page
 When I click on element located by `By.xpath(//*[@class='header']//a[contains(text(), 'Log in')])`
 Given I am on page with URL `https://demowebshop.tricentis.com/login`
+When I enter `<username>` in field located by `By.xpath(//*[@class='email'])`
+When I enter `<password>` in field located by `By.xpath(//*[@class='password'])`
+When I click on element located by `By.xpath(//*[@class='button-1 login-button'])`
+Then text `Hello, User1` exists
+Examples:
+|username         |password|
+|User1@example.com|Test123 |
 
 
 Scenario: Verify that ‘Computers’ group has 3 sub-groups with correct names
@@ -36,6 +43,8 @@ When I click on element located by `By.xpath(//*[@class='list']//a[contains(text
 When I click on element located by `By.xpath(//a[contains(text(), 'Black & White Diamond Heart')])`
 Given I am on page with URL `https://demowebshop.tricentis.com/black-white-diamond-heart`
 When I click on element located by `By.xpath(//input[@value= 'Add to wishlist'])`
+When I click on element located by `By.xpath(//*[@class='ico-wishlist']/span[@class='cart-label'])`
+Then text `Black & White Diamond Heart` exists
 
 
 Scenario: Verify that allows removing an item from the card
@@ -48,14 +57,14 @@ When I click on element located by `By.xpath(//input[@name='updatecart'])`
 Then text `Your Shopping Cart is empty!` exists
 
 
-Scenario: Verify that allows removing an item from the card
+Scenario: Verify that allows checkout an item
 Given I am on main application page
 When I click on element located by `By.xpath(//*[@class='list']//a[contains(text(), 'Apparel & Shoes')])`
 When I click on element located by `By.xpath((//input[@value= 'Add to cart'])[1])`
-When I click on element located by `By.xpath((//input[@value= 'Add to cart'])[1])`
-When I click on element located by `By.xpath(//span[contains(text(), 'Shopping cart')])`
+When I click on element located by `By.xpath(//*[@class='ico-cart']/span[@class='cart-label'])`
 When I CHECK checkbox located by `By.xpath(//input[@id='termsofservice'])`
 When I click on element located by `By.xpath(//button[contains(text(), 'Checkout')])`
+Then text `Thank you for order!` exists
 
 
 Scenario: Verify that allows adding an item to the card
@@ -64,3 +73,5 @@ When I click on element located by `By.xpath(//*[@class='list']//a[contains(text
 When I click on element located by `By.xpath(//a[contains(text(), 'Black & White Diamond Heart')])`
 Given I am on page with URL `https://demowebshop.tricentis.com/black-white-diamond-heart`
 When I click on element located by `By.xpath(//div[@class='product-essential']//input[@value= 'Add to cart'])`
+When I click on element located by `By.xpath(//*[@class='ico-cart']/span[@class='cart-label'])`
+Then text `Black & White Diamond Heart` exists
