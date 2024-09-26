@@ -21,6 +21,9 @@ Then response code is equal to `200`
 
 Scenario: Verify that allows login as a User
 When I set request headers:
+|name            |value           |
+|Content-Type    |application/json|
+Given form data request:
 |name    |value      |
 |username|${userName}|
 |password|${password}|

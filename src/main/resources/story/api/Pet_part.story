@@ -8,17 +8,17 @@ Given request body:
 {
   "id": ${petId},
   "category": {
-    "id": 0,
-    "name": "${petName}"
+    "id": ${petId},
+    "name": "dog"
   },
-  "name": "doggie",
+  "name": "${petName}",
   "photoUrls": [
     "string"
   ],
   "tags": [
     {
-      "id": 0,
-      "name": "string"
+      "id": ${petId},
+      "name": "free"
     }
   ],
   "status": "available"
@@ -39,6 +39,7 @@ Then response code is equal to `200`
 
 
 Scenario: Verify that allows updating Pet’s name and status
+Given I initialize scenario variable `petNameApdate` with value `#{generate(Dog.name)}`
 When I set request headers:
 |name            |value           |
 |Content-Type    |application/json|
@@ -46,17 +47,17 @@ Given request body:
 {
   "id": ${petId},
   "category": {
-    "id": 0,
-    "name": "New"
+    "id": ${petId},
+    "name": "dog"
   },
-  "name": "doggie",
+  "name": "${petNameApdate}",
   "photoUrls": [
     "string"
   ],
   "tags": [
     {
-      "id": 0,
-      "name": "string"
+      "id": ${petId},
+      "name": "free"
     }
   ],
   "status": "pending"
@@ -70,4 +71,4 @@ When I set request headers:
 |name            |value           |
 |Content-Type    |application/json|
 When I execute HTTP DELETE request for resource with URL `https://petstore.swagger.io/v2/${petId}`
-Then response code is equal to `404`
+Then response code is equal to `200`
